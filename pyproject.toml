@@ -1,0 +1,52 @@
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+skip-string-normalization = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+fix = true
+exclude = [
+    ".git",
+    ".venv",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # bugbear
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line length (handled by black)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["tests", "pages", "locators", "utils", "config"]
+
+[project]
+name = "playwright-python-automation-skeleton"
+version = "0.1.0"
+description = "Professional Playwright automation testing skeleton in Python"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+
+dependencies = [
+    "playwright>=1.42.0",
+    "pytest>=8.0.0",
+    "pytest-playwright>=0.5.0",
+    "pytest-rerunfailures>=14.0",
+    "allure-pytest>=2.13.0",
+]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+warn_unused_configs = true
+explicit_package_bases = true

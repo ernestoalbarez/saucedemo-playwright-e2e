@@ -1,0 +1,106 @@
+# ==============================
+# Python
+# ==============================
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.dylib
+.Python
+build/
+dist/
+downloads/
+develop-eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# ==============================
+# Virtual Environments
+# ==============================
+
+venv/
+.venv/
+env/
+ENV/
+.python-version
+
+# ==============================
+# Test & Coverage
+# ==============================
+
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ==============================
+# Allure
+# ==============================
+
+allure-results/
+allure-report/
+
+# ==============================
+# Selenium / WebDrivers
+# ==============================
+
+chromedriver
+geckodriver
+msedgedriver
+
+# ==============================
+# Playwright
+# ==============================
+
+.playwright/
+playwright-report/
+test-results/
+trace/
+trace.zip
+
+# ==============================
+# Logs
+# ==============================
+
+*.log
+logs/
+log/
+
+# ==============================
+# Environment variables
+# ==============================
+
+.env
+.env.*
+!.env.example
+
+# ==============================
+# IDEs / Editors
+# ==============================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==============================
+# OS Files
+# ==============================
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==============================
+# CI / Misc
+# ==============================
+
+.cache/
