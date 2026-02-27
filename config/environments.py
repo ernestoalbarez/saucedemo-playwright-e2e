@@ -8,7 +8,7 @@ class Environment(StrEnum):
 
 
 BASE_URLS: dict[Environment, str] = {
-    Environment.LOCAL: "http://localhost:3000",
-    Environment.STAGING: "https://staging.example.com",
-    Environment.PROD: "https://example.com",
+    Environment.LOCAL: "https://www.saucedemo.com",
+    Environment.STAGING: "https://www.saucedemo.com",
+    Environment.PROD: "https://www.saucedemo.com",
 }
