@@ -5,7 +5,7 @@ from pages.base_page import BasePage
 
 
 class ExamplePage(BasePage):
-    URL = "https://example.com"
+    URL = "/"
 
     def __init__(self, page: Page) -> None:
         super().__init__(page)

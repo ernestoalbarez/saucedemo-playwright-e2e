@@ -7,5 +7,4 @@ def test_example_page_loads(page: Page) -> None:
     example = ExamplePage(page)
 
     example.open()
-    example.expect_title("Example Domain")
-    example.expect_heading("Example Domain")
+    example.expect_title("Swag Labs")
