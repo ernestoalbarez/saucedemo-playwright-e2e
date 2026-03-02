@@ -5,3 +5,5 @@ pre-commit
 ruff
 black
 mypy
+pytest-rerunfailures
+allure-pytest
