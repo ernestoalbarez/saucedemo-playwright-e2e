@@ -44,20 +44,20 @@ It is designed as a **reusable template** that prioritizes scalability, type saf
 
 1. **Clone the template**:
    ```bash
-   git clone <repository-url>
-   cd playwright-python-automation-skeleton
+   git clone git@github.com:ernestoalbarez/saucedemo-playwright-e2e.git
+   cd saucedemo-playwright-e2e
    ```
 
 2. **Set up virtual environment**:
    ```bash
-   python -m venv .venv
+   python -m venv .venv # python3.11 -m venv .venv
    source .venv/bin/activate  # macOS/Linux
    # .\.venv\Scripts\activate  # Windows
    ```
 
 3. **Install dependencies**:
    ```bash
-   pip install -e .
+   pip install -r requirements-dev.txt
    playwright install --with-deps
    ```
 
