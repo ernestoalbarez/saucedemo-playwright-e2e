@@ -46,13 +46,6 @@ jobs:
       - name: Type check with Mypy
         run: mypy .
 
-      - name: Debug Black
-        run: |
-          which python
-          python --version
-          which black
-          black --version
-
   smoke-tests:
     name: Smoke Tests
     needs: quality
