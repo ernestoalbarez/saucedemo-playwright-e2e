@@ -1,7 +1,10 @@
+from typing import List
+
 from playwright.sync_api import Page, expect
+
 from locators.inventory_locators import InventoryLocators
 from pages.base_page import BasePage
-from typing import List
+
 
 class InventoryPage(BasePage):
     def __init__(self, page: Page) -> None:
@@ -16,14 +19,10 @@ class InventoryPage(BasePage):
         return items.all_inner_texts()
 
     def add_to_cart(self, product_slug: str) -> None:
-        self.page.click(
-            f"button[data-test='add-to-cart-{product_slug}']"
-        )
+        self.page.click(f"button[data-test='add-to-cart-{product_slug}']")
 
     def remove_from_cart(self, product_slug: str) -> None:
-        self.page.click(
-            f"button[data-test='remove-{product_slug}']"
-        )
+        self.page.click(f"button[data-test='remove-{product_slug}']")
 
     def sort_by(self, option_value: str) -> None:
         self.page.select_option(
