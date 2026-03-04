@@ -22,6 +22,7 @@ jobs:
     name: Code Quality
     runs-on: ubuntu-latest
     timeout-minutes: 10
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,11 +38,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
+      # 🔎 Debug real environment (temporary but recommended)
+      - name: Debug Python & Black
+        run: |
+          which python
+          python --version
+          which black
+          black --version
+
       - name: Lint with Ruff
         run: ruff check .
 
-      - name: Format with Black
-        run: black --check .
+      - name: Check formatting with Black
+        run: |
+          black --check .
+        # If it fails, we want to see what changed
+        continue-on-error: false
+
+      - name: Show Black diff on failure
+        if: failure()
+        run: black --diff .
 
       - name: Type check with Mypy
         run: mypy .
@@ -51,10 +67,12 @@ jobs:
     needs: quality
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
     strategy:
       fail-fast: false
       matrix:
         browser: [chromium]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
