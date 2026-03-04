@@ -1,6 +1,5 @@
-from typing import List
-
 from playwright.sync_api import Page, expect
+from typing import List
 
 from locators.inventory_locators import InventoryLocators
 from pages.base_page import BasePage
