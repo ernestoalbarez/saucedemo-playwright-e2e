@@ -1,7 +1,7 @@
 playwright>=1.42.0
 pytest>=8.0.0
 pytest-playwright>=0.5.0
-e-commit==4.5.1
+pre-commit==4.5.1
 ruff==0.15.4
 black==26.1.0
 mypy==1.19.1
