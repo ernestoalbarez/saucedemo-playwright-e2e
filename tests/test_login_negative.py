@@ -4,7 +4,6 @@ from playwright.sync_api import Page
 from pages.login_page import LoginPage
 
 
-@pytest.mark.auth
 @pytest.mark.parametrize(
     "username,password,expected_error",
     [
@@ -22,7 +21,7 @@ from pages.login_page import LoginPage
             "locked_out_user",
             "secret_sauce",
             "Epic sadface: Sorry, this user has been locked out.",
-        )
+        ),
     ],
     ids=["invalid_credentials", "empty_username", "locked_user"],
 )
