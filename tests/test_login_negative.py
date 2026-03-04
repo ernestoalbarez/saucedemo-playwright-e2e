@@ -22,7 +22,7 @@ from pages.login_page import LoginPage
             "locked_out_user",
             "secret_sauce",
             "Epic sadface: Sorry, this user has been locked out.",
-        ),
+        )
     ],
     ids=["invalid_credentials", "empty_username", "locked_user"],
 )
@@ -38,4 +38,3 @@ def test_login_negative_scenarios(
 
     error_msg = login_page.get_error_message()
     assert error_msg.strip() == expected_error
-    
