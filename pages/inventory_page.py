@@ -1,5 +1,5 @@
 from playwright.sync_api import Page, expect
-from typing import List
+
 from locators.inventory_locators import InventoryLocators
 from pages.base_page import BasePage
 
@@ -12,7 +12,7 @@ class InventoryPage(BasePage):
         expect(self.page.locator(InventoryLocators.INVENTORY_CONTAINER)).to_be_visible()
         expect(self.page.locator(InventoryLocators.HEADER_LABEL)).to_have_text("Products")
 
-    def get_products(self) -> List[str]:
+    def get_products(self) -> list[str]:
         items = self.page.locator(InventoryLocators.INVENTORY_ITEM_NAME)
         return items.all_inner_texts()
 
