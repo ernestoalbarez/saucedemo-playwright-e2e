@@ -27,4 +27,3 @@ class InventoryPage(BasePage):
             InventoryLocators.SORT_DROPDOWN,
             value=option_value,
         )
-
