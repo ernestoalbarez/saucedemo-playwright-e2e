@@ -2,6 +2,7 @@ from playwright.sync_api import Page, expect
 from locators.inventory_locators import InventoryLocators
 from pages.base_page import BasePage
 
+
 class InventoryPage(BasePage):
     def __init__(self, page: Page) -> None:
         super().__init__(page)
