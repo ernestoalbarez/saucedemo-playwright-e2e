@@ -8,13 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from playwright.sync_api import Page
-
-from pages.login_page import LoginPage
-from pages.inventory_page import InventoryPage
-from pages.cart_page import CartPage
-
-import pytest
 from playwright.sync_api import (
     Browser,
     BrowserContext,
@@ -24,6 +17,9 @@ from playwright.sync_api import (
 )
 
 from config import settings
+from pages.cart_page import CartPage
+from pages.inventory_page import InventoryPage
+from pages.login_page import LoginPage
 from utils.browser import launch_browser
 
 
