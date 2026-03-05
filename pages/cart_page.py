@@ -1,8 +1,7 @@
-from typing import List
 from playwright.sync_api import Page
 
-from pages.base_page import BasePage
 from locators.cart_locators import CartLocators
+from pages.base_page import BasePage
 
 
 class CartPage(BasePage):
@@ -12,7 +11,7 @@ class CartPage(BasePage):
     def open(self) -> None:
         self.page.click(CartLocators.CART_LINK)
 
-    def get_items(self) -> List[str]:
+    def get_items(self) -> list[str]:
         items = self.page.locator(CartLocators.CART_ITEM_NAME)
         return items.all_inner_texts()
 

@@ -1,12 +1,11 @@
 import pytest
 from playwright.sync_api import Page
 
-from pages.login_page import LoginPage
-from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
+from pages.inventory_page import InventoryPage
+from pages.login_page import LoginPage
 
 
-@pytest.mark.smoke
 @pytest.mark.cart
 def test_add_product_updates_cart(page: Page) -> None:
     login = LoginPage(page)
@@ -33,7 +32,6 @@ def test_add_product_updates_cart(page: Page) -> None:
 def test_remove_product_from_cart(page: Page) -> None:
     login = LoginPage(page)
     inventory = InventoryPage(page)
-    cart = CartPage(page)
 
     login.open()
     login.login("standard_user", "secret_sauce")
