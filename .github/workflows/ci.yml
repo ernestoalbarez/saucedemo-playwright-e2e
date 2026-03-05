@@ -40,6 +40,11 @@ jobs:
       - name: Lint with Ruff
         run: ruff check . --no-fix
 
+      - name: Format check
+        run: |
+          black .
+          git diff --exit-code
+
       - name: Format with Black
         run: black --check .
 
