@@ -78,7 +78,6 @@ def _take_screenshot(page: Page, test_name: str) -> None:
     page.screenshot(path=str(filepath), full_page=True)
     print(f"\nScreenshot saved to: {filepath}")
 
-
     @pytest.hookimpl(tryfirst=True, hookwrapper=True)
     def pytest_runtest_makereport(item: pytest.Item, call: Any) -> Generator[None, Any, None]:
         """Hook to make test results available to fixtures."""
@@ -90,16 +89,13 @@ def _take_screenshot(page: Page, test_name: str) -> None:
     def login_page(page: Page) -> LoginPage:
         return LoginPage(page)
 
-
     @pytest.fixture
     def inventory_page(page: Page) -> InventoryPage:
         return InventoryPage(page)
 
-
     @pytest.fixture
     def cart_page(page: Page) -> CartPage:
         return CartPage(page)
-
 
     @pytest.fixture
     def logged_in_inventory(page: Page) -> InventoryPage:
