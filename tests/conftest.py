@@ -61,7 +61,6 @@ def page(context: BrowserContext, request: pytest.FixtureRequest) -> Generator[P
 
     yield page
 
-    # Screenshot on failure
     if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
         _take_screenshot(page, request.node.name)
 
@@ -75,35 +74,53 @@ def _take_screenshot(page: Page, test_name: str) -> None:
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     filepath = screenshots_dir / f"{test_name}_{timestamp}.png"
+
     page.screenshot(path=str(filepath), full_page=True)
     print(f"\nScreenshot saved to: {filepath}")
 
-    @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-    def pytest_runtest_makereport(item: pytest.Item, call: Any) -> Generator[None, Any, None]:
-        """Hook to make test results available to fixtures."""
-        outcome = yield
-        rep = outcome.get_result()
-        setattr(item, "rep_" + rep.when, rep)
 
-    @pytest.fixture
-    def login_page(page: Page) -> LoginPage:
-        return LoginPage(page)
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item: pytest.Item, call: Any) -> Generator[None, Any, None]:
+    """Hook to make test results available to fixtures."""
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
 
-    @pytest.fixture
-    def inventory_page(page: Page) -> InventoryPage:
-        return InventoryPage(page)
 
-    @pytest.fixture
-    def cart_page(page: Page) -> CartPage:
-        return CartPage(page)
+# -------------------------
+# PAGE FIXTURES
+# -------------------------
 
-    @pytest.fixture
-    def logged_in_inventory(page: Page) -> InventoryPage:
-        login = LoginPage(page)
-        inventory = InventoryPage(page)
 
-        login.open()
-        login.login("standard_user", "secret_sauce")
-        inventory.is_at()
+@pytest.fixture
+def login_page(page: Page) -> LoginPage:
+    return LoginPage(page)
 
-        return inventory
+
+@pytest.fixture
+def inventory_page(page: Page) -> InventoryPage:
+    return InventoryPage(page)
+
+
+@pytest.fixture
+def cart_page(page: Page) -> CartPage:
+    return CartPage(page)
+
+
+# -------------------------
+# STATE FIXTURES
+# -------------------------
+
+
+@pytest.fixture
+def logged_in_inventory(page: Page) -> InventoryPage:
+    """User logged in and positioned on inventory page."""
+    login = LoginPage(page)
+    inventory = InventoryPage(page)
+
+    login.open()
+    login.login("standard_user", "secret_sauce")
+
+    inventory.is_at()
+
+    return inventory
