@@ -17,3 +17,15 @@ class CheckoutStepTwoPage(BasePage):
 
     def finish_checkout(self) -> None:
         self.page.click(CheckoutStepTwoLocators.FINISH_BUTTON)
+
+    def get_item_total(self) -> float:
+        text = self.page.locator(CheckoutStepTwoLocators.ITEM_TOTAL).inner_text()
+        return float(text.replace("Item total: $", ""))
+
+    def get_tax(self) -> float:
+        text = self.page.locator(CheckoutStepTwoLocators.TAX).inner_text()
+        return float(text.replace("Tax: $", ""))
+
+    def get_total(self) -> float:
+        text = self.page.locator(CheckoutStepTwoLocators.TOTAL).inner_text()
+        return float(text.replace("Total: $", ""))

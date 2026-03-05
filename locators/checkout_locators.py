@@ -8,7 +8,11 @@ class CheckoutStepOneLocators:
 class CheckoutStepTwoLocators:
     SUMMARY_CONTAINER = ".summary_info"
     ITEM_NAMES = ".inventory_item_name"
+    ITEM_TOTAL = ".summary_subtotal_label"
+    TAX = ".summary_tax_label"
+    TOTAL = ".summary_total_label"
     FINISH_BUTTON = "[data-test='finish']"
+    CANCEL_BUTTON = "[data-test='cancel']"
 
 
 class CheckoutCompleteLocators:

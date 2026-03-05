@@ -26,3 +26,7 @@ class CartPage(BasePage):
 
     def checkout(self) -> None:
         self.page.click(CartLocators.CHECKOUT_BUTTON)
+
+    def get_cart_items(self) -> list[str]:
+        items = self.page.locator(CartLocators.CART_ITEM_NAME)
+        return items.all_inner_texts()
