@@ -2,12 +2,12 @@
 Global pytest configuration and fixtures.
 """
 
+import uuid
 from collections.abc import Generator
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-import uuid
 import pytest
 from playwright.sync_api import (
     Browser,
