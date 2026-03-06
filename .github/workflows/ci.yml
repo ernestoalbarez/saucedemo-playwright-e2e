@@ -2,13 +2,9 @@ name: CI Pipeline
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
   pull_request:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -18,15 +14,16 @@ env:
   PYTHONUNBUFFERED: "1"
 
 jobs:
+
   quality:
     name: Code Quality
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Setup Python 3.11
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -37,18 +34,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
-      - name: Lint with Ruff
+      - name: Lint
         run: ruff check . --no-fix
 
       - name: Format check
-        run: |
-          black .
-          git diff --exit-code
-
-      - name: Format with Black
         run: black --check .
 
-      - name: Type check with Mypy
+      - name: Type check
         run: mypy .
 
   smoke-tests:
@@ -56,15 +48,16 @@ jobs:
     needs: quality
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
     strategy:
       fail-fast: false
       matrix:
         browser: [chromium]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Setup Python 3.11
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -83,22 +76,21 @@ jobs:
           pip install -r requirements-dev.txt
 
       - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: playwright install --with-deps
 
       - name: Run Smoke Tests
-        run: python -m pytest -m smoke --maxfail=1 --disable-warnings
+        run: pytest -m smoke
         env:
           BROWSER: ${{ matrix.browser }}
           HEADLESS: "true"
 
-      - name: Upload Artifacts
-        if: success() || failure()
+      - name: Upload Test Artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-artifacts-${{ matrix.browser }}
+          name: artifacts-${{ matrix.browser }}
           path: |
             allure-results/
-            test-results/
             screenshots/
-          if-no-files-found: ignore
           retention-days: 7

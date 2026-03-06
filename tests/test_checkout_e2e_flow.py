@@ -6,34 +6,31 @@ from pages.checkout_complete_page import CheckoutCompletePage
 from pages.checkout_step_one_page import CheckoutStepOnePage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
 from pages.inventory_page import InventoryPage
-from pages.login_page import LoginPage
 
 
 @pytest.mark.checkout
-def test_checkout_end_to_end_flow(page: Page) -> None:
+def test_checkout_end_to_end_flow(
+    logged_in_inventory: InventoryPage,
+    cart_page: CartPage,
+    page: Page,
+) -> None:
 
-    login = LoginPage(page)
-    inventory = InventoryPage(page)
-    cart = CartPage(page)
+    inventory = logged_in_inventory
+
     step_one = CheckoutStepOnePage(page)
     step_two = CheckoutStepTwoPage(page)
     complete = CheckoutCompletePage(page)
 
-    # Login
-    login.open()
-    login.login("standard_user", "secret_sauce")
-
     # Add product
-    inventory.is_at()
     inventory.add_to_cart("sauce-labs-backpack")
     inventory.open_cart()
 
     # Cart validation
-    cart.is_at()
-    items = cart.get_cart_items()
+    cart_page.is_at()
+    items = cart_page.get_cart_items()
     assert "Sauce Labs Backpack" in items
 
-    cart.checkout()
+    cart_page.checkout()
 
     # Checkout step one
     step_one.is_at()
@@ -46,7 +43,7 @@ def test_checkout_end_to_end_flow(page: Page) -> None:
     items = step_two.get_items()
     assert "Sauce Labs Backpack" in items
 
-    # Validate total calculation
+    # Validate totals
     item_total = step_two.get_item_total()
     tax = step_two.get_tax()
     total = step_two.get_total()
