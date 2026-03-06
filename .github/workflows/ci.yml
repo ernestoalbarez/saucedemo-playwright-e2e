@@ -1,22 +1,32 @@
-name: CI
+name: CI Pipeline
 
 on:
-  pull_request:
   push:
     branches:
       - main
       - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONUNBUFFERED: "1"
 
 jobs:
-  test:
+  quality:
+    name: Code Quality
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -25,26 +35,70 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install playwright pytest pytest-playwright pytest-rerunfailures allure-pytest mypy ruff black
+          pip install -r requirements-dev.txt
 
-      - name: Cache Playwright browsers
+      - name: Lint with Ruff
+        run: ruff check . --no-fix
+
+      - name: Format check
+        run: |
+          black .
+          git diff --exit-code
+
+      - name: Format with Black
+        run: black --check .
+
+      - name: Type check with Mypy
+        run: mypy .
+
+  smoke-tests:
+    name: Smoke Tests
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Cache Playwright Browsers
         uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('pyproject.toml') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('requirements-dev.txt') }}
 
-      - name: Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Install Playwright Browsers
         run: playwright install --with-deps
 
-      - name: Run linting
-        run: |
-          ruff check .
-          black --check .
+      - name: Run Smoke Tests
+        run: python -m pytest -m smoke --maxfail=1 --disable-warnings
+        env:
+          BROWSER: ${{ matrix.browser }}
+          HEADLESS: "true"
 
-      - name: Run type check
-        run: mypy .
-
-      - name: Run tests
-        run: pytest
+      - name: Upload Artifacts
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts-${{ matrix.browser }}
+          path: |
+            allure-results/
+            test-results/
+            screenshots/
+          if-no-files-found: ignore
+          retention-days: 7

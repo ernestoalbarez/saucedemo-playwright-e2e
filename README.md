@@ -1,4 +1,6 @@
-# Playwright Python Automation Skeleton
+# Saucedemo Playwright E2E Automation
+
+![CI](https://github.com/ernestoalbarez/saucedemo-playwright-e2e/actions/workflows/ci.yml/badge.svg)
 
 ## Overview
 
