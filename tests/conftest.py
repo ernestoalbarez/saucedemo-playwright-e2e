@@ -2,6 +2,7 @@
 Global pytest configuration and fixtures.
 """
 
+import uuid
 from collections.abc import Generator
 from datetime import datetime
 from pathlib import Path
@@ -96,7 +97,9 @@ def _take_screenshot(page: Page, test_name: str) -> None:
     screenshots_dir.mkdir(exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filepath = screenshots_dir / f"{test_name}_{timestamp}.png"
+    unique = uuid.uuid4().hex[:6]
+
+    filepath = screenshots_dir / f"{test_name}_{timestamp}_{unique}.png"
 
     page.screenshot(path=str(filepath), full_page=True)
 
