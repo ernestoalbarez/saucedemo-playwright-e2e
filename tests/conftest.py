@@ -17,14 +17,11 @@ from playwright.sync_api import (
 )
 
 from config import settings
-from config.test_users import STANDARD_USER, STANDARD_PASSWORD
-
+from config.test_users import STANDARD_PASSWORD, STANDARD_USER
 from pages.cart_page import CartPage
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
-
 from utils.browser import launch_browser
-
 
 # =====================================================
 # PLAYWRIGHT ENGINE FIXTURES

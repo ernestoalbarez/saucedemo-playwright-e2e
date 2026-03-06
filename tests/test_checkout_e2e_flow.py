@@ -9,9 +9,7 @@ from pages.inventory_page import InventoryPage
 
 @pytest.mark.checkout
 def test_checkout_end_to_end_flow(
-    logged_in_inventory: InventoryPage,
-    cart_page: CartPage,
-    page
+    logged_in_inventory: InventoryPage, cart_page: CartPage, page
 ) -> None:
 
     inventory = logged_in_inventory
