@@ -7,3 +7,4 @@ black==26.1.0
 mypy==1.19.1
 pytest-rerunfailures
 allure-pytest
+pytest-xdist>=3.5.0
