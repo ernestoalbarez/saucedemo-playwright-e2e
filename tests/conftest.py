@@ -17,10 +17,18 @@ from playwright.sync_api import (
 )
 
 from config import settings
+from config.test_users import STANDARD_USER, STANDARD_PASSWORD
+
 from pages.cart_page import CartPage
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
+
 from utils.browser import launch_browser
+
+
+# =====================================================
+# PLAYWRIGHT ENGINE FIXTURES
+# =====================================================
 
 
 @pytest.fixture(scope="session")
@@ -40,7 +48,10 @@ def browser(playwright_instance: Playwright) -> Generator[Browser, None, None]:
 
 @pytest.fixture(scope="function")
 def context(browser: Browser) -> Generator[BrowserContext, None, None]:
-    """Creates a fresh browser context per test for full isolation."""
+    """
+    Creates a fresh browser context per test for full isolation.
+    """
+
     context = browser.new_context(
         base_url=settings.base_url,
         viewport=settings.viewport,
@@ -50,12 +61,19 @@ def context(browser: Browser) -> Generator[BrowserContext, None, None]:
     context.set_default_navigation_timeout(settings.navigation_timeout_ms)
 
     yield context
+
     context.close()
 
 
 @pytest.fixture(scope="function")
-def page(context: BrowserContext, request: pytest.FixtureRequest) -> Generator[Page, None, None]:
-    """Provides a clean Page instance and handles failure reporting."""
+def page(
+    context: BrowserContext,
+    request: pytest.FixtureRequest,
+) -> Generator[Page, None, None]:
+    """
+    Provides a clean Page instance and handles failure reporting.
+    """
+
     page = context.new_page()
     page.set_default_timeout(settings.timeout_ms)
 
@@ -67,8 +85,16 @@ def page(context: BrowserContext, request: pytest.FixtureRequest) -> Generator[P
     page.close()
 
 
+# =====================================================
+# TEST REPORTING
+# =====================================================
+
+
 def _take_screenshot(page: Page, test_name: str) -> None:
-    """Captures a screenshot for failed tests."""
+    """
+    Captures a screenshot when a test fails.
+    """
+
     screenshots_dir = Path("screenshots")
     screenshots_dir.mkdir(exist_ok=True)
 
@@ -76,50 +102,67 @@ def _take_screenshot(page: Page, test_name: str) -> None:
     filepath = screenshots_dir / f"{test_name}_{timestamp}.png"
 
     page.screenshot(path=str(filepath), full_page=True)
+
     print(f"\nScreenshot saved to: {filepath}")
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item: pytest.Item, call: Any) -> Generator[None, Any, None]:
-    """Hook to make test results available to fixtures."""
+def pytest_runtest_makereport(
+    item: pytest.Item,
+    call: Any,
+) -> Generator[None, Any, None]:
+    """
+    Hook that exposes test result to fixtures.
+    Needed for failure screenshots.
+    """
+
     outcome = yield
     rep = outcome.get_result()
+
     setattr(item, "rep_" + rep.when, rep)
 
 
-# -------------------------
-# PAGE FIXTURES
-# -------------------------
+# =====================================================
+# PAGE OBJECT FIXTURES
+# =====================================================
 
 
 @pytest.fixture
 def login_page(page: Page) -> LoginPage:
+    """Provides LoginPage object."""
     return LoginPage(page)
 
 
 @pytest.fixture
 def inventory_page(page: Page) -> InventoryPage:
+    """Provides InventoryPage object."""
     return InventoryPage(page)
 
 
 @pytest.fixture
 def cart_page(page: Page) -> CartPage:
+    """Provides CartPage object."""
     return CartPage(page)
 
 
-# -------------------------
+# =====================================================
 # STATE FIXTURES
-# -------------------------
+# =====================================================
 
 
 @pytest.fixture
-def logged_in_inventory(page: Page) -> InventoryPage:
-    """User logged in and positioned on inventory page."""
+def authenticated_user(page: Page) -> InventoryPage:
+    """
+    Logs in with a standard user and returns InventoryPage.
+
+    This fixture reduces login duplication across tests.
+    """
+
     login = LoginPage(page)
     inventory = InventoryPage(page)
 
     login.open()
-    login.login("standard_user", "secret_sauce")
+    login.login(STANDARD_USER, STANDARD_PASSWORD)
 
     inventory.is_at()
 
