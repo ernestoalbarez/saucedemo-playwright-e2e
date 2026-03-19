@@ -199,29 +199,31 @@ cd saucedemo-playwright-e2e
 
 ## Create virtual environment
 
-Ubuntu / Linux:
+Using `uv` (recommended):
 
 ``` bash
-python3 -m venv .venv
+uv venv
 source .venv/bin/activate
 ```
 
-Windows:
+Alternatively, with standard Python:
 
 ``` bash
-python -m venv .venv
-.venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+.venv\Scripts\activate     # Windows
 ```
 
 ------------------------------------------------------------------------
 
 ## Install dependencies
 
+Using `uv` for fast installation:
+
 ``` bash
-pip install -r requirements-dev.txt
+uv pip install -r requirements-dev.txt
 playwright install --with-deps
 ```
-
 ------------------------------------------------------------------------
 
 ## Install pre-commit hooks
@@ -237,7 +239,7 @@ pre-commit install
 ## Run all tests
 
 ``` bash
-pytest
+uv run pytest
 ```
 
 ------------------------------------------------------------------------
@@ -245,7 +247,7 @@ pytest
 ## Run with environment variable
 
 ``` bash
-ENV=staging pytest
+ENV=staging uv run pytest
 ```
 
 ------------------------------------------------------------------------
@@ -253,7 +255,7 @@ ENV=staging pytest
 ## Run in a specific browser
 
 ``` bash
-BROWSER=firefox pytest
+BROWSER=firefox uv run pytest
 ```
 
 Supported browsers:
@@ -267,7 +269,7 @@ Supported browsers:
 ## Run a single test file
 
 ``` bash
-pytest tests/test_checkout.py
+uv run pytest tests/test_checkout.py
 ```
 
 ------------------------------------------------------------------------
@@ -277,7 +279,7 @@ pytest tests/test_checkout.py
 Run tests to generate results:
 
 ``` bash
-pytest
+uv run pytest
 ```
 
 Results will appear in:
