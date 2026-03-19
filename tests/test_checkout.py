@@ -14,6 +14,7 @@ def test_successful_checkout(
     cart_page: CartPage,
     page: Page,
 ) -> None:
+    """Verifies the complete checkout process using explicit page objects step-by-step."""
 
     inventory = logged_in_inventory
 

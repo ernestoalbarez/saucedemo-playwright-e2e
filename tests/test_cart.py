@@ -9,6 +9,7 @@ def test_add_product_to_cart(
     logged_in_inventory: InventoryPage,
     cart_page: CartPage,
 ) -> None:
+    """Verifies that a product can be successfully added to the shopping cart."""
     logged_in_inventory.add_to_cart("sauce-labs-backpack")
 
     cart_page.open()
@@ -22,6 +23,7 @@ def test_add_product_to_cart(
 def test_remove_product_from_cart(
     logged_in_inventory: InventoryPage,
 ) -> None:
+    """Verifies that a product can be removed from the shopping cart from the inventory page."""
     logged_in_inventory.add_to_cart("sauce-labs-backpack")
     logged_in_inventory.remove_from_cart("sauce-labs-backpack")
 
@@ -31,6 +33,7 @@ def test_cart_content_validation(
     logged_in_inventory: InventoryPage,
     cart_page: CartPage,
 ) -> None:
+    """Verifies that the cart displays multiple added products correctly."""
     logged_in_inventory.add_to_cart("sauce-labs-backpack")
     logged_in_inventory.add_to_cart("sauce-labs-bike-light")
 

@@ -5,6 +5,7 @@ from pages.base_page import BasePage
 
 
 class InventoryPage(BasePage):
+    """Page object for the Inventory (Products) page, handling item additions and navigation."""
     def __init__(self, page: Page) -> None:
         super().__init__(page)
 

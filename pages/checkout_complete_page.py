@@ -5,6 +5,7 @@ from pages.base_page import BasePage
 
 
 class CheckoutCompletePage(BasePage):
+    """Page object for the final Checkout Complete page, verifying order success."""
     def __init__(self, page: Page) -> None:
         super().__init__(page)
 

@@ -31,6 +31,7 @@ def test_login_negative_scenarios(
     password: str,
     expected_error: str,
 ) -> None:
+    """Verifies generic login negative scenarios (invalid, empty, locked) using parameterized inputs."""
     login_page = LoginPage(page)
     login_page.open()
     login_page.login(username, password)

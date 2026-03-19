@@ -1,4 +1,5 @@
 class InventoryLocators:
+    """CSS selectors for elements on the Inventory (products) page."""
 
     INVENTORY_CONTAINER = "[data-test='inventory-container']"
     HEADER_LABEL = ".title"

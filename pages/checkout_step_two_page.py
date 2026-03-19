@@ -5,6 +5,7 @@ from pages.base_page import BasePage
 
 
 class CheckoutStepTwoPage(BasePage):
+    """Page object for the checkout overview page containing order totals."""
     def __init__(self, page: Page) -> None:
         super().__init__(page)
 

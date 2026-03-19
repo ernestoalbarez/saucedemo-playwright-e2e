@@ -22,6 +22,8 @@ from config.test_users import STANDARD_PASSWORD, STANDARD_USER
 from pages.cart_page import CartPage
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
+from flows.checkout_flow import CheckoutFlow
+from flows.login_flow import LoginFlow
 from utils.browser import launch_browser
 
 # =====================================================
@@ -146,12 +148,29 @@ def cart_page(page: Page) -> CartPage:
 
 
 # =====================================================
+# FLOW LAYER FIXTURES
+# =====================================================
+
+
+@pytest.fixture
+def login_flow(page: Page) -> LoginFlow:
+    """Provides LoginFlow object."""
+    return LoginFlow(page)
+
+
+@pytest.fixture
+def checkout_flow(page: Page) -> CheckoutFlow:
+    """Provides CheckoutFlow object."""
+    return CheckoutFlow(page)
+
+
+# =====================================================
 # STATE FIXTURES
 # =====================================================
 
 
 @pytest.fixture
-def authenticated_user(page: Page) -> InventoryPage:
+def logged_in_inventory(page: Page) -> InventoryPage:
     """
     Logs in with a standard user and returns InventoryPage.
 

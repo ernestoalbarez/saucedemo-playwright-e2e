@@ -5,6 +5,7 @@ from pages.base_page import BasePage
 
 
 class LoginPage(BasePage):
+    """Page object for the Login page, handling user authentication."""
     URL = "/"
 
     def __init__(self, page: Page) -> None:

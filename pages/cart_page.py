@@ -5,6 +5,7 @@ from pages.base_page import BasePage
 
 
 class CartPage(BasePage):
+    """Page object for the Shopping Cart, handling cart items and checkout initiation."""
     def __init__(self, page: Page) -> None:
         super().__init__(page)
 
