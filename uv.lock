@@ -429,6 +429,11 @@ dev = [
     { name = "ruff" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "black" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "allure-pytest", specifier = ">=2.13.0" },
@@ -445,6 +450,9 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.11.0" },
 ]
 provides-extras = ["dev"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "black", specifier = ">=26.1.0" }]
 
 [[package]]
 name = "pluggy"
