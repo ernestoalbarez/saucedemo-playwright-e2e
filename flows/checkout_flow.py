@@ -1,6 +1,7 @@
 """
 Checkout flow encapsulating the entire checkout journey.
 """
+
 from playwright.sync_api import Page
 
 from pages.cart_page import CartPage
@@ -26,7 +27,7 @@ class CheckoutFlow:
     def complete_checkout(self, first_name: str, last_name: str, zip_code: str) -> None:
         """
         Completes the checkout process.
-        
+
         Steps:
         - Proceed to checkout from cart
         - Fill shipping information and continue

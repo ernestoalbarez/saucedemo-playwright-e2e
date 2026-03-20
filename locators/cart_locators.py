@@ -1,5 +1,6 @@
 class CartLocators:
     """CSS selectors for elements on the Cart page."""
+
     CART_LINK = "[data-test='shopping-cart-link']"
 
     CART_CONTAINER = "#cart_contents_container"

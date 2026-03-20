@@ -6,6 +6,7 @@ from pages.base_page import BasePage
 
 class ExamplePage(BasePage):
     """Page object for a sample example page."""
+
     URL = "/"
 
     def __init__(self, page: Page) -> None:
