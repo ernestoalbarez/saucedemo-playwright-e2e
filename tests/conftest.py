@@ -19,11 +19,11 @@ from playwright.sync_api import (
 
 from config import settings
 from config.test_users import STANDARD_PASSWORD, STANDARD_USER
+from flows.checkout_flow import CheckoutFlow
+from flows.login_flow import LoginFlow
 from pages.cart_page import CartPage
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
-from flows.checkout_flow import CheckoutFlow
-from flows.login_flow import LoginFlow
 from utils.browser import launch_browser
 
 # =====================================================

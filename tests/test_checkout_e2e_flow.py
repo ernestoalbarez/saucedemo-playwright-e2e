@@ -1,10 +1,10 @@
 import pytest
 from playwright.sync_api import Page
 
+from flows.checkout_flow import CheckoutFlow
 from pages.cart_page import CartPage
 from pages.checkout_complete_page import CheckoutCompletePage
 from pages.inventory_page import InventoryPage
-from flows.checkout_flow import CheckoutFlow
 
 
 @pytest.mark.checkout
