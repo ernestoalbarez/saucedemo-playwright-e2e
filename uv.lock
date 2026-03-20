@@ -432,6 +432,7 @@ dev = [
 [package.dev-dependencies]
 dev = [
     { name = "black" },
+    { name = "mypy" },
 ]
 
 [package.metadata]
@@ -452,7 +453,10 @@ requires-dist = [
 provides-extras = ["dev"]
 
 [package.metadata.requires-dev]
-dev = [{ name = "black", specifier = ">=26.1.0" }]
+dev = [
+    { name = "black", specifier = ">=26.1.0" },
+    { name = "mypy", specifier = ">=1.15.0" },
+]
 
 [[package]]
 name = "pluggy"
