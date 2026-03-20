@@ -3,6 +3,7 @@ from playwright.sync_api import Locator, Page, expect
 
 class BasePage:
     """Base class for all page objects, providing generic playwright actions."""
+
     def __init__(self, page: Page) -> None:
         self.page = page
 

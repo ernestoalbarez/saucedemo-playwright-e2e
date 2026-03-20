@@ -1,6 +1,7 @@
 """
 Login flow encapsulating authentication-related business actions.
 """
+
 from playwright.sync_api import Page
 
 from pages.login_page import LoginPage
@@ -18,7 +19,7 @@ class LoginFlow:
     def login_as_standard_user(self, username: str, password: str) -> None:
         """
         Logs in a user with the provided credentials.
-        
+
         Steps:
         - Navigate to the login page
         - Fill credentials

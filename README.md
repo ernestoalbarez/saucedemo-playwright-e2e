@@ -1,6 +1,10 @@
 # Saucedemo Playwright E2E Automation
 
 ![CI](https://github.com/ernestoalbarez/saucedemo-playwright-e2e/actions/workflows/ci.yml/badge.svg)
+![Lint](https://img.shields.io/badge/lint-ruff-blue)
+![Python](https://img.shields.io/badge/python-3.11+-blue)
+![Playwright](https://img.shields.io/badge/playwright-tested-green)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Overview
 
@@ -15,6 +19,7 @@ It demonstrates modern **SDET architecture patterns** including:
 -   Test fixtures
 -   Static typing
 -   CI integration
+-   Reproducible environments with uv
 -   Professional reporting
 
 The goal is to serve as both:
@@ -127,7 +132,7 @@ These tools run both locally and in CI.
 
 The repository includes **GitHub Actions** which automatically:
 
--   Installs dependencies
+-   Installs dependencies using uv (reproducible environments)
 -   Runs linting and formatting
 -   Executes type checking
 -   Runs the full test suite
@@ -164,6 +169,7 @@ The repository includes **GitHub Actions** which automatically:
     ├── screenshots/            # Failure screenshots
     ├── allure-results/         # Allure raw results
     │
+    ├── uv.lock                # Locked dependencies for reproducibility
     ├── pytest.ini
     ├── pyproject.toml
     └── README.md
@@ -204,6 +210,7 @@ Using `uv` (recommended):
 ``` bash
 uv venv
 source .venv/bin/activate
+uv sync
 ```
 
 Alternatively, with standard Python:
@@ -221,7 +228,7 @@ source .venv/bin/activate  # Linux/macOS
 Using `uv` for fast installation:
 
 ``` bash
-uv pip install -r requirements-dev.txt
+uv sync
 playwright install --with-deps
 ```
 ------------------------------------------------------------------------

@@ -27,21 +27,34 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
-      - name: Install dependencies
+      - name: Install uv
+        run: curl -Ls https://astral.sh/uv/install.sh | sh
+
+      - name: Add uv to PATH
+        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+
+      - name: Sync dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
+          uv sync
 
       - name: Lint
-        run: ruff check . --no-fix
+        run: |
+          uv run ruff check . --no-fix
 
       - name: Format check
-        run: black --check .
+        run: |
+          uv run black --check .
 
       - name: Type check
-        run: mypy .
+        run: |
+          uv run mypy .
 
   smoke-tests:
     name: Smoke Tests
@@ -61,26 +74,38 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: Cache Playwright Browsers
         uses: actions/cache@v4
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('requirements-dev.txt') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('uv.lock') }}
 
-      - name: Install dependencies
+      - name: Install uv
+        run: curl -Ls https://astral.sh/uv/install.sh | sh
+
+      - name: Add uv to PATH
+        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      - name: Cache uv
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/uv
+          key: ${{ runner.os }}-uv-${{ hashFiles('uv.lock') }}
+
+      - name: Sync dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
+          uv sync
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: playwright install --with-deps
+        run: |
+          uv run playwright install --with-deps
 
       - name: Run Smoke Tests
-        run: pytest -m smoke
+        run: |
+          uv run pytest -m smoke
         env:
           BROWSER: ${{ matrix.browser }}
           HEADLESS: "true"
