@@ -418,6 +418,7 @@ dependencies = [
     { name = "pytest-playwright" },
     { name = "pytest-rerunfailures" },
     { name = "requests" },
+    { name = "ruff" },
 ]
 
 [package.optional-dependencies]
@@ -440,6 +441,7 @@ requires-dist = [
     { name = "pytest-playwright", specifier = ">=0.5.0" },
     { name = "pytest-rerunfailures", specifier = ">=14.0" },
     { name = "requests", specifier = ">=2.32.5" },
+    { name = "ruff", specifier = ">=0.11.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = "==0.11.0" },
 ]
 provides-extras = ["dev"]
